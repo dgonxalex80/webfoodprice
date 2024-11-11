@@ -1,0 +1,40 @@
+name: "FoodPrice"
+output_dir: "docs"
+navbar:
+  title: "FoodPrice"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Costos"
+      href: about.html
+      menu:
+        - text: "Bogotá"
+          href: Bogota.html
+        - text: "Medellín"
+          href: Medellin.html
+        - text: "Cali"
+          href: Cali.html
+        - text: "Bucaramanga"
+          href: Bucaramanga.html
+        - text: "Barranquilla"
+          href: Barranquilla.html          
+        - text: "Cartagena"
+          href: Cartagena.html
+        - text: "Cúcuta"
+          href: Cucuta.html
+        - text: "Ibagé"
+          href: Ibague.html
+        - text: "Manizales"
+          href: Manizales.html
+        - text: "Pasto"
+          href: Pasto.html
+        - text: "Pereira"
+          href: Pereira.html         
+        - text: "Villavicencio"
+          href: Villavicencio.html          
+          
+output:
+  html_document:
+    theme: flatly
+    css: style.css             
+      

@@ -1,0 +1,30 @@
+---
+title: "Cali"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("R/01-cargar-paquetes.R")
+source("R/02-importar-bases-datos.R")
+
+```
+
+```{r, echo=FALSE}
+Cali$cost_day <- round(Cali$cost_day,1)
+names(Cali) = c("Año-mes", "Grupo-Demo", "Sexo", "Costo diario", "Dieta", "Mes", "Año")
+
+datatable(Cali[, 2:7], 
+          filter = 'top', 
+          options = list(
+            pageLength = 22,         # Cantidad de filas por página
+            autoWidth = FALSE,       # Ajusta automáticamente el ancho de las columnas
+            dom = 'Brtip',           # Excluye la barra de búsqueda (elimina 'f')
+            columnDefs = list(
+              list(className = 'dt-center', targets = "_all") # Centrar el contenido
+            )
+          )
+)
+
+```
+
