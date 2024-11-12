@@ -14,6 +14,15 @@ source("R/02-importar-bases-datos.R")
 Cali$cost_day <- round(Cali$cost_day,1)
 names(Cali) = c("Año-mes", "Grupo-Demo", "Sexo", "Costo diario", "Dieta", "Mes", "Año")
 
+
+Cali$`Costo diario` <- as.character(Cali$`Costo diario`)
+Cali$Año <- as.character(Cali$Año)
+Cali$Mes <- as.character(Cali$Mes)
+Cali$Sexo <- as.character(Cali$Sexo)
+
+
+
+
 datatable(Cali[, 2:7], 
           filter = 'top', 
           options = list(
@@ -30,7 +39,7 @@ datatable(Cali[, 2:7],
 
 <br><br>
 
-## Listado de alimentos que requieren ser imputados
+## Listado de alimentos que requieren imputación 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 # Lee el archivo de texto
@@ -41,7 +50,7 @@ text_data <- readLines(file_path)
 library(stringr)
 
 # Define las palabras a excluir
-exclude_words <- c("Cali",
+exclude_words <- c("Cali", "Average daily cost per",
   "and month April", "and month August", "and month December", "and month February", "and month January", 
   "and month July", "and month June", "and month March", "and month May", "and month November", 
   "and month October", "and month September", "April", "August", "December", "February", "January", 
@@ -49,7 +58,7 @@ exclude_words <- c("Cali",
   "CoCA", "CoNA", "If you have information for these", "In the city of Medellin for the year ",
   "Iron", " Lipids", "Magnesium", "Niacin", "paquete", "Perejil", "Protein", "Sodium", 
   "the following foods were omitted due to lack of nutritional information", "The nutrients to use in the model are",
-  "Thiamine", "to input them", "use the optional parameter called", "VitaminA", "VitaminC", "Zinc","Calcium"
+  "Thiamine", "to input them", "use the optional parameter called", "VitaminA", "VitaminC", "Zinc","Calcium", "Folate","Lipids", "Phosphorus"
 )
 
 # Combina las palabras a excluir en un único patrón de expresión regular

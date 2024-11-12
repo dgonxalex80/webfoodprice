@@ -14,6 +14,16 @@ source("R/02-importar-bases-datos.R")
 Medellin$cost_day <- round(Medellin$cost_day,1)
 names(Medellin) = c("Año-mes", "Grupo-Demo", "Sexo", "Costo diario", "Dieta", "Mes", "Año")
 
+
+
+Medellin$`Costo diario` <- as.character(Medellin$`Costo diario`)
+Medellin$Año <- as.character(Medellin$Año)
+Medellin$Mes <- as.character(Medellin$Mes)
+Medellin$Sexo <- as.character(Medellin$Sexo)
+
+
+
+
 datatable(Medellin[, 2:7], 
           filter = 'top', 
           options = list(
@@ -30,7 +40,7 @@ datatable(Medellin[, 2:7],
 
 <br><br>
 
-## Listado de alimentos que requieren ser imputados
+## Listado de alimentos que requieren imputación 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 # Lee el archivo de texto

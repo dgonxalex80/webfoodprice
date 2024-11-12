@@ -5,7 +5,7 @@ output: html_document
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
 source("R/01-cargar-paquetes.R")
 source("R/02-importar-bases-datos.R")
 
@@ -14,6 +14,12 @@ source("R/02-importar-bases-datos.R")
 ```{r, echo=FALSE}
 Barranquilla$cost_day <- round(Barranquilla$cost_day,1)
 names(Barranquilla) = c("Año-mes", "Grupo-Demo", "Sexo", "Costo diario", "Dieta", "Mes", "Año")
+
+
+Barranquilla$`Costo diario` <- as.character(Barranquilla$`Costo diario`)
+Barranquilla$Año <- as.character(Barranquilla$Año)
+Barranquilla$Mes <- as.character(Barranquilla$Mes)
+Barranquilla$Sexo <- as.character(Barranquilla$Sexo)
 
 datatable(Barranquilla[, 2:7], 
           filter = 'top', 
@@ -30,3 +36,46 @@ datatable(Barranquilla[, 2:7],
 ```
 
 
+<br><br>
+
+## Listado de alimentos que requieren imputación 
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Lee el archivo de texto
+file_path <- "txt-imputacion/output_Cali.txt"
+text_data <- readLines(file_path)
+
+# Extrae nombres de alimentos, excluyendo palabras específicas
+library(stringr)
+
+# Define las palabras a excluir
+exclude_words <- c("Barranquilla",
+  "and month April", "and month August", "and month December", "and month February", "and month January", 
+  "and month July", "and month June", "and month March", "and month May", "and month November", 
+  "and month October", "and month September", "April", "August", "December", "February", "January", 
+  "July", "June", "kilocalories is", "March", "May", "negra", "November", "October", "September",
+  "CoCA", "CoNA", "If you have information for these", "In the city of Medellin for the year ",
+  "Iron", " Lipids", "Magnesium", "Niacin", "paquete", "Perejil", "Protein", "Sodium", 
+  "the following foods were omitted due to lack of nutritional information", "The nutrients to use in the model are", 
+  "Average daily cost per", "Thiamine", "to input them", "use the optional parameter called", "VitaminA", "VitaminC", "Zinc","Calcium", "tacos", "Cali","Folate","Lipids", "Phosphorus","Riboflavin","Calabacín"
+)
+
+# Combina las palabras a excluir en un único patrón de expresión regular
+exclude_pattern <- paste0("\\b(", paste(exclude_words, collapse = "|"), ")\\b")
+
+# Extrae los posibles nombres de alimentos mediante expresión regular, excluyendo las palabras no deseadas
+food_list <- unlist(str_extract_all(text_data, "\\b[A-Za-záéíóúñÑ\\s]+\\b"))
+
+# Filtra las palabras no deseadas de la lista de alimentos
+food_list <- food_list[!str_detect(food_list, exclude_pattern)]
+
+# Crea una tabla de frecuencia de los alimentos extraídos
+food_frequency <- as.data.frame(table(food_list))
+
+# Renombra columnas para claridad
+colnames(food_frequency) <- c("Food", "Frequency")
+
+# Muestra la tabla de frecuencia
+print(food_frequency)
+
+```

@@ -14,6 +14,13 @@ source("R/02-importar-bases-datos.R")
 Bogota$cost_day <- round(Bogota$cost_day,1)
 names(Bogota) = c("Año-mes", "Grupo-Demo", "Sexo", "Costo diario", "Dieta", "Mes", "Año")
 
+
+Bogota$`Costo diario` <- as.character(Bogota$`Costo diario`)
+Bogota$Año <- as.character(Bogota$Año)
+Bogota$Mes <- as.character(Bogota$Mes)
+Bogota$Sexo <- as.character(Bogota$Sexo)
+
+
 datatable(Bogota[, 2:7], 
           filter = 'top', 
           options = list(
@@ -31,7 +38,7 @@ datatable(Bogota[, 2:7],
 
 <br><br>
 
-## Listado de alimentos que requieren ser imputados
+## Listado de alimentos que requieren imputación 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 # Lee el archivo de texto
@@ -50,8 +57,8 @@ exclude_words <- c("Bogota",
   "CoCA", "CoNA", "If you have information for these", "In the city of Medellin for the year ",
   "Iron", " Lipids", "Magnesium", "Niacin", "paquete", "Perejil", "Protein", "Sodium", 
   "the following foods were omitted due to lack of nutritional information", "The nutrients to use in the model are",
-  "Thiamine", "to input them", "use the optional parameter called", "VitaminA", "VitaminC", "Zinc","Calcium", 
-  "Average daily cost per"
+  "Thiamine", "to input them", "use the optional parameter called", "VitaminA", "VitaminC", "Zinc","Calcium", "Carbohydrates","cogote","Folate","Lipids",
+  "Average daily cost per","caja", "paletero","Phosphorus", "Riboflavin"
 )
 
 # Combina las palabras a excluir en un único patrón de expresión regular
